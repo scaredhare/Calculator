@@ -33,14 +33,18 @@ function divide(a, b) {
 
 // Function to handle the operation
 function operate(operator, num1, num2) {
+
+    const number1 = parseFloat(num1);
+    const number2 = parseFloat(num2);
+
     if (operator === "+") {
-        return add(num1, num2);
+        return add(number1, number2);
     } else if (operator === "-") {
-        return subtract(num1, num2);
+        return subtract(number1, number2);
     } else if (operator === "*") {
-        return multiply(num1, num2);
+        return multiply(number1, number2);
     } else if (operator === "/") {
-        return divide(num1, num2);
+        return divide(number1, number2);
     } else {
         return "Invalid operator";
     }
@@ -75,9 +79,12 @@ digitButtons.forEach((button) => {
 operatorButtons.forEach((button) => {
     button.addEventListener("click", () => {
         if (currentDisplayValue !== "") {
-            num1 = currentDisplayValue;
+            if (!isOperatorSelected) {
+                num1 = currentDisplayValue;
+            }
             operator = button.textContent; // Save the operator
             currentDisplayValue = ""; // Clear display for num2
+            isOperatorSelected = true; // Indicate operator selection
             updateDisplay();
             console.log("Operator selected:", operator);
         }
@@ -96,6 +103,7 @@ equalsButton.addEventListener("click", () => {
         num1 = currentDisplayValue;
         num2 = "";
         operator = "";
+        isOperatorSelected = false;
     } else {
         console.log("Incomplete operation");
     }
